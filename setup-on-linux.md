@@ -17,7 +17,9 @@ The reason I'm reposting here is because actually the eBot Forum has a lot of is
  - Node.JS version 0.12
 
 **If you like Ubuntu you will need to use [Ubuntu 14.04](https://releases.ubuntu.com/14.04/)**
+
 *I've also seen people installing it on CentOS 7.
+
 And if you like Debian people on eBot's Forum recomendo Debian 7 or 8.*
 
 On Ubuntu 16.04 and beyond PHP was updated to PHP7 and I couldn't install PHP5, even if I' ve compiled myself I still had problems in making Apache2 using PHP5 from what I've understand I would need `libapache2-mod-php5` but I couldn't get it from anywhere even from `ppa:ondrej/php`.
@@ -27,6 +29,7 @@ Also don't try to install it via WSL on Windows, since you can't install Ubuntu 
 ### Installation (Ubuntu and Debian)
 
 **1 - Become Root**
+
 Login to you Linux Machine and become root, usually you will use `sudo su` for this.
 
 **2 - Update and Required Packages**
@@ -373,7 +376,9 @@ service ebot start
 The output should be something like: `Starting eBot-V3: ebotv3 started (PID: 27640).`
 
 Now go to the Admin Panel in the eBot Web and on the left menu you SHOULD see this:
+
 ![Image of the eBot Panel with everything working](https://i.imgur.com/VI4Z7Sm.png)
+
 If the your output is not like this, something is wrong (maybe bot IPs on the config files).
 
 **8.2 - Useful commands:**
