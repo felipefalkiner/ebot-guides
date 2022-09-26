@@ -18,9 +18,8 @@ The reason I'm reposting here is because actually the eBot Forum has a lot of is
 
 **If you like Ubuntu you will need to use [Ubuntu 14.04](https://releases.ubuntu.com/14.04/)**
 
-*I've also seen people installing it on CentOS 7.
-
-And if you like Debian people on eBot's Forum recomendo Debian 7 or 8.*
+*I've also seen people installing it on CentOS 7.*
+*And if you like Debian people on eBot's Forum recomendo Debian 7 or 8.*
 
 On Ubuntu 16.04 and beyond PHP was updated to PHP7 and I couldn't install PHP5, even if I' ve compiled myself I still had problems in making Apache2 using PHP5 from what I've understand I would need `libapache2-mod-php5` but I couldn't get it from anywhere even from `ppa:ondrej/php`.
 
