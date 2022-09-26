@@ -253,5 +253,163 @@ chmod -R 777 cache
 php symfony cc
 php symfony doctrine:build --all --no-confirmation
 php symfony guard:create-user --is-super-admin admin@ebot admin admin
+```
 
+**7 - Config Apache**
+If you don't have a domain, use the `7.1 - Without sub-domain`, it will be easier
+
+**7.1 - Without sub-domain**
+
+Create the file /etc/apache2/conf.d/ebotv3
+```sh
+ nano /etc/apache2/sites-available/ebotv3.conf 
+```
+The file must have this inside:
+```conf
+Alias / /home/ebot/ebot-web/web/
+
+<Directory /home/ebot/ebot-web/web/>
+	AllowOverride All
+	<IfVersion < 2.4>
+		Order allow,deny
+		allow from all
+	</IfVersion>
+
+	<IfVersion >= 2.4>
+		Require all granted
+	</IfVersion>
+</Directory>
+```
+Now run the following commands:
+```sh
+a2enmod rewrite
+a2ensite ebotv3.conf
+service apache2 reload 
+```
+
+Now we need to edit the `.htaccess` file of the eBot Web:
+```sh
+nano /home/ebot/ebot-web/web/.hthtaccess
+```
+On line 8 you will find `#RewriteBase /` remove the `#` to uncomment the line and save the file.
+
+Now go to 7.3
+
+**7.2 - For a sub-domain**
+(I haven't tested this method, just copied and pasted from the article at the beginning of the documment)
+
+Create the file /etc/apache2/conf.d/ebotv3
+```sh
+ nano /etc/apache2/sites-available/ebotv3.conf 
+```
+
+and put this inside:
+```conf
+<VirtualHost *:80>
+	#Edit your email
+	ServerAdmin contact@mydomain.com
+
+#Edit your sub-domain
+ServerAlias ebot.mydomain.com
+
+DocumentRoot /home/ebot/ebot-web/web
+
+<Directory /home/ebot/ebot-web/web/>
+	Options Indexes FollowSymLinks MultiViews
+	AllowOverride All
+	<IfVersion < 2.4>
+		Order allow,deny
+		allow from all
+	</IfVersion>
+
+	<IfVersion >= 2.4>
+		Require all granted
+	</IfVersion>
+</Directory>
+</VirtualHost>
+```
+
+Then:
+
+```
+a2enmod rewrite
+a2ensite ebotv3.conf
+service apache2 reload 
+```
+
+**7.3 - Discover your eBot-Panel**
+
+You can now access the eBot Web via the browser (if you are unable to, something is wrong).
+
+Do to this simple go to http://your-ip/ or http://ebot.your-domain.com/
+
+If you managed to see the Panel, access the admin panel now by typing /admin.php at the end of the url http://your-ip/admin.php or http://ebot.your-domain.com/admin.php
+
+The credentials are:
+Username: admin
+Password: admin
+
+You can change this or create a new user when you login.
+
+**7.4 - Delete /web/installation**
+```sh
+cd /home/ebot/ebot-web/web
+rm -R installation
+```
+
+**8 - Start/Stop eBot Daemon**
+
+Usually you just need to `php /home/ebot/ebot-csgo/bootstrap.php ` to start eBot, but I couldn't get done this way, so use the following script to install eBot as a Service on Debian/Ubuntu.
+
+**8.1 - Installing eBot Daemon**
+```sh
+cd /home/install
+wget https://raw.githubusercontent.com/vince52/eBot-initscript/master/ebotv3; mv ebotv3 /etc/init.d/ebot && chmod +x /etc/init.d/ebot
+```
+Then do this:
+```sh
+service ebot start
+```
+The output should be something like: `Starting eBot-V3: ebotv3 started (PID: 27640).`
+
+Now go to the Admin Panel in the eBot Web and on the left menu you SHOULD see this:
+![Image of the eBot Panel with everything working](https://i.imgur.com/VI4Z7Sm.png)
+If the your output is not like this, something is wrong (maybe bot IPs on the config files).
+
+**8.2 - Useful commands:**
+
+**Start ebot-csgo:**
+```
+service ebot start
+```
+or
+```
+/etc/init.d/ebot start
+```
+
+**Stop ebot-csgo:**
+```
+service ebot stop
+```
+or
+```
+/etc/init.d/ebot stop
+```
+
+**Restart ebot-csgo:**
+```
+service ebot restart
+```
+or
+```
+/etc/init.d/ebot restart
+```
+
+**Status ebot-csgo:**
+```
+service ebot status
+```
+or
+```
+/etc/init.d/ebot status
 ```
